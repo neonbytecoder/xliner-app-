@@ -1,0 +1,9 @@
+services:
+  xliner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5001:80"
+    container_name: xliner-app
+    restart: unless-stopped
