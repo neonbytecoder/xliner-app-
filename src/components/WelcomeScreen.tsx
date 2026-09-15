@@ -116,42 +116,90 @@ export default function WelcomeScreen({ projects, onCreateNew, onOpenProject, on
             {searchQuery ? 'No projects match your search.' : 'No Recent Projects'}
           </div>
         ) : (
-          <div className="project-list" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div className="project-list" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {filteredProjects.map(project => (
               <div
                 key={project.id}
                 className="project-list-item"
                 onClick={() => onOpenProject(project)}
                 id={`project-${project.id}`}
-                style={{ display: 'flex', alignItems: 'center', padding: '12px 16px', backgroundColor: '#ffffff', borderRadius: 8, cursor: 'pointer', border: '1px solid transparent', transition: 'all 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-focus)'}
-                onMouseLeave={e => e.currentTarget.style.borderColor = 'transparent'}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  padding: '16px 20px', 
+                  backgroundColor: '#ffffff', 
+                  borderRadius: 12, 
+                  cursor: 'pointer', 
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+                  border: '1px solid transparent', 
+                  transition: 'all 0.2s ease',
+                  position: 'relative'
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = 'var(--accent-blue)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)';
+                  const delBtn = e.currentTarget.querySelector('.project-card-delete') as HTMLElement;
+                  if (delBtn) delBtn.style.opacity = '1';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = 'transparent';
+                  e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.05)';
+                  const delBtn = e.currentTarget.querySelector('.project-card-delete') as HTMLElement;
+                  if (delBtn) delBtn.style.opacity = '0';
+                }}
               >
-                <div className="project-card-icon" style={{ width: 40, height: 40, backgroundColor: 'var(--bg-hover)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, color: 'var(--accent-blue)', marginRight: 16 }}>
+                <div className="project-card-icon" style={{ 
+                  width: 48, 
+                  height: 48, 
+                  backgroundColor: 'var(--accent-blue)', 
+                  borderRadius: 12, 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  fontSize: 20, 
+                  fontWeight: 600,
+                  color: '#ffffff', 
+                  marginRight: 20,
+                  boxShadow: '0 2px 8px rgba(37, 99, 235, 0.2)'
+                }}>
                   {project.name.charAt(0).toUpperCase()}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="project-card-name" style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-primary)' }}>{project.name}</div>
-                  <div className="project-card-platform" style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2 }}>
+                  <div className="project-card-name" style={{ fontWeight: 600, fontSize: 15, color: '#111827', marginBottom: 4 }}>{project.name}</div>
+                  <div className="project-card-platform" style={{ fontSize: 13, color: '#6b7280' }}>
                     {getPlatformLabel(project.platform)} · {project.template}
                   </div>
                 </div>
-                <div className="project-card-meta" style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                  <span className="project-card-time" style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>
+                <div className="project-card-meta" style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+                  <span className="project-card-time" style={{ fontSize: 13, color: '#9ca3af', fontWeight: 500 }}>
                     {formatTimeAgo(project.lastOpened)}
                   </span>
                   <button
                     className="project-card-delete"
                     onClick={e => {
                       e.stopPropagation();
-                      if (confirm(`Delete "${project.name}"?`)) {
+                      if (confirm(`Are you sure you want to delete "${project.name}"? This action cannot be undone.`)) {
                         onDeleteProject(project.id);
                       }
                     }}
                     title="Delete project"
-                    style={{ background: 'none', border: 'none', color: 'var(--text-tertiary)', cursor: 'pointer', padding: 4 }}
+                    style={{ 
+                      background: '#fee2e2', 
+                      border: 'none', 
+                      color: '#ef4444', 
+                      cursor: 'pointer', 
+                      padding: '8px', 
+                      borderRadius: '8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      opacity: 0,
+                      transition: 'opacity 0.2s ease, background 0.2s ease'
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.background = '#fecaca'}
+                    onMouseLeave={e => e.currentTarget.style.background = '#fee2e2'}
                   >
-                    <IconTrash size={14} />
+                    <IconTrash size={16} />
                   </button>
                 </div>
               </div>
