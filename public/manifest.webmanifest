@@ -11,10 +11,22 @@
   "categories": ["developer", "productivity", "utilities"],
   "icons": [
     {
-      "src": "/logo.png",
+      "src": "/logo-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "1254x1254",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
   "screenshots": [],
